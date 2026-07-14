@@ -154,15 +154,15 @@ void FYLPreloadManagerModule::PreloadAssets(EPreloadContext Context)
 			continue;
 		}
 
-		const TSoftObjectPtr<UObject>& AssetPtr = DataAssetData.DataAsset;
+		const TSoftObjectPtr<UDataAsset>& AssetPtr = DataAssetData.DataAsset;
 		if (AssetPtr.IsNull())
 		{
 			continue;
 		}
 
-		if (UObject* Asset = AssetPtr.LoadSynchronous())
+		if (UDataAsset* Asset = AssetPtr.LoadSynchronous())
 		{
-			TargetPreloadedAssets.Add(TStrongObjectPtr<UObject>(Asset));
+			TargetPreloadedAssets.Add(TStrongObjectPtr<UDataAsset>(Asset));
 
 #if WITH_EDITOR
 			if (Context == EPreloadContext::EditorWorld)
