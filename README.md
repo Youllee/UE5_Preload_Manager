@@ -16,6 +16,11 @@ Unreal Engine에서 자주 사용하는 데이터 에셋을 Editor World와 Serv
 - Preload 성공/실패 로그 추가
 - Setting Widget 개선 : Widget 자동 줄바꿈 추가
 - 불필요한 config 파일 제거
+
+## v1.2 Update
+
+- Module에 집중된 내부 로직을 EditorSubsystem, WorldSubsystem으로 분리, 관리하도록 수정
+- Async Load 관련 취약점을 수정
   
 ## 주요 기능
 
