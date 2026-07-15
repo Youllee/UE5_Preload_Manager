@@ -10,8 +10,8 @@ public class YLPreloadManager : ModuleRules
 			new string[]
 			{
 				"Core",
-				"CoreUObject",
-				"DataRegistry",
+                "CoreUObject",
+                "DataRegistry",
 				"DeveloperSettings",
 				"Engine",
 			}

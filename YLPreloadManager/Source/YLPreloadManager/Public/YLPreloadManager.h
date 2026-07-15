@@ -7,6 +7,7 @@ class UObject;
 class UPackage;
 class UWorld;
 class UYLPreloadManagerSettings;
+struct FStreamableHandle;
 class FObjectPostSaveContext;
 struct FPropertyChangedEvent;
 struct FYLPreloadDataBase;
@@ -21,12 +22,24 @@ public:
 private:
 	void RegisterDelegates();
 	void UnregisterDelegates();
+
 	void PreloadAssets(EPreloadContext Context);
+	void PreloadAssetsForGameWorld(const UWorld* World);
+	void ResetPreloadedAssetsForGameWorld(const UWorld* World);
+
+	TArray<TStrongObjectPtr<UObject>>& GetPreloadedAssetsForContext(EPreloadContext Context);
+	TArray<TSharedPtr<FStreamableHandle>>& GetAsyncLoadHandlesForContext(EPreloadContext Context);
+	void ResetPreloadedAssetsForContext(EPreloadContext Context);
 	bool ShouldPreloadForContext(const FYLPreloadDataBase& InPreloadData, EPreloadContext Context) const;
 
 private:
 	TArray<TStrongObjectPtr<UObject>> EditorWorldPreloadedAssets;
-	TArray<TStrongObjectPtr<UObject>> GameWorldPreloadedAssets;
+	TArray<TStrongObjectPtr<UObject>> GameServerPreloadedAssets;
+	TArray<TStrongObjectPtr<UObject>> GameClientPreloadedAssets;
+
+	TArray<TSharedPtr<FStreamableHandle>> EditorWorldAsyncLoadHandles;
+	TArray<TSharedPtr<FStreamableHandle>> GameServerAsyncLoadHandles;
+	TArray<TSharedPtr<FStreamableHandle>> GameClientAsyncLoadHandles;
 
 	FDelegateHandle PostEngineInitHandle;
 	FDelegateHandle PostWorldInitializationHandle;

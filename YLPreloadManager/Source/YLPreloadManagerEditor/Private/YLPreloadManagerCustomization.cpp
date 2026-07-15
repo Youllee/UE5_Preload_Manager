@@ -5,12 +5,14 @@
 #include "PropertyHandle.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/SBoxPanel.h"
+#include "Widgets/Layout/SWrapBox.h"
 #include "Widgets/Text/STextBlock.h"
 
 void FYLPreloadDataCustomization::CustomizeHeader(TSharedRef<IPropertyHandle> PropertyHandle, FDetailWidgetRow& HeaderRow, IPropertyTypeCustomizationUtils& CustomizationUtils)
 {
-	// Make HorizontalBox
-	TSharedRef<SHorizontalBox> HorizontalBox = SNew(SHorizontalBox);
+	// Property가 늘어나면 위젯이 화면 밖으로 빠져나갈 수 있기 때문에, HorizontalBox 대신 WrapBox를 사용한다.
+	TSharedRef<SWrapBox> WrapBox = SNew(SWrapBox)
+		.UseAllottedSize(true);
 
 	// Add Property Datas
 	uint32 ChildrenNum = 0;
@@ -59,24 +61,23 @@ void FYLPreloadDataCustomization::CustomizeHeader(TSharedRef<IPropertyHandle> Pr
 						]
 				];
 
-		// Add HorizontalBox Slot
-		HorizontalBox->AddSlot()
-			.AutoWidth()
+		// Add WrapBox Slot
+		WrapBox->AddSlot()
 			.Padding(0.0f, 0.0f, 10.0f, 0.0f)
-			.VAlign(VAlign_Center)
 			[
 				ChildWidget
 			];
 	}
 
-	// Add Horizontal Box
+	// Add Wrap Box
 	HeaderRow
 		.NameContent()
 		[
 			PropertyHandle->CreatePropertyNameWidget()
 		]
 		.ValueContent()
+		.HAlign(HAlign_Fill)
 		[
-			HorizontalBox
+			WrapBox
 		];
 }
